@@ -1,13 +1,18 @@
 package at.ac.fhcampuswien.newsanalyzer.ctrl;
 
+import at.ac.fhcampuswien.newsanalyzer.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.newsanalyzer.downloader.SequentialDownloader;
 import at.ac.fhcampuswien.newsapi.NewsApi;
 import at.ac.fhcampuswien.newsapi.beans.Article;
 import at.ac.fhcampuswien.newsapi.beans.NewsResponse;
 import at.ac.fhcampuswien.newsapi.beans.Source;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Controller {
 
@@ -83,5 +88,36 @@ public class Controller {
 				.max(Comparator.comparingInt(o -> o.getValue().size()))
 				.map(stringListEntry -> stringListEntry.getKey() + " " + stringListEntry.getValue().size())
 				.orElseThrow();
+	}
+	public List<String> getUrlList() throws NewsAPIException{
+		if(articles == null) {
+			throw new NewsAPIException("Load data first");
+		}
+		List<Article> articleList = articles;
+		Stream<Article> streamFromList = articleList.stream();
+		List<String> urlList = new ArrayList<>();
+
+		streamFromList
+				.filter( article -> article.getUrl() != null)
+				.forEach( article -> urlList.add(article.getUrl()));
+		return urlList;
+	}
+	public void downloadLastSearch() throws NewsAPIException{
+		List<String> urlList = getUrlList();
+		SequentialDownloader sqD = new SequentialDownloader();
+		if(urlList == null){
+			throw new NewsAPIException("Load data first");
+		}
+		int counter = sqD.process(urlList);
+		System.out.println(counter + " articles downloaded.");
+	}
+	public void downloadLastSearchParallel() throws NewsAPIException{
+		List<String> urlList = getUrlList();
+		ParallelDownloader pqD = new ParallelDownloader();
+		if(urlList == null){
+			throw new NewsAPIException("Load data first");
+		}
+		int counter = pqD.process(urlList);
+		System.out.println(counter + " articles downloaded.");
 	}
 }
