@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 public class Controller {
 
-	public static final String APIKEY = "0038b5ccc1124e94b01d19b0d5982697";  //0038b5ccc1124e94b01d19b0d5982697
+	public static final String APIKEY = "18e30d99886c4adb81c7000d01d6af90";  //0038b5ccc1124e94b01d19b0d5982697
 
 	private List<Article> articles = null;
 
@@ -117,7 +117,13 @@ public class Controller {
 		if(urlList == null){
 			throw new NewsAPIException("Load data first");
 		}
-		int counter = pqD.process(urlList);
-		System.out.println(counter + " articles downloaded.");
+		try {
+			int counter = pqD.process(urlList);
+			System.out.println(counter + " articles downloaded.");
+		}
+		catch (Exception e){
+			System.out.println(e);
+		}
+
 	}
 }

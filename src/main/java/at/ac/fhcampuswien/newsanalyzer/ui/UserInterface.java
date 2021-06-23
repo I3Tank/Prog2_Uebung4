@@ -57,8 +57,8 @@ public class UserInterface {
 			//Todo
 			List<String> urlList = getUrlList();
 			System.out.println("List of downloaded Urls:");
-			for (String ulr : urlList){
-				System.out.println(ulr);
+			for (String url : urlList){
+				System.out.println(url);
 			}
 		});
 		//
@@ -83,7 +83,7 @@ public class UserInterface {
 		try{
 			ctrl.downloadLastSearch();
 		} catch (NewsAPIException e) {
-			System.out.println("Something went wrong.");
+			System.out.println("Please load data first!");
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -92,7 +92,7 @@ public class UserInterface {
 		try{
 			ctrl.downloadLastSearchParallel();
 		} catch (NewsAPIException e) {
-			System.out.println("Something went wrong with threads.");
+			System.out.println("Please load data first!");
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}

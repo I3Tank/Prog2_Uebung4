@@ -15,7 +15,7 @@ public class SequentialDownloader extends Downloader {
         }
         long endTime = System.nanoTime();
         long duration = (endTime - startTime) / 1000000;
-        System.out.println("Downloaded all Articles in : " + duration + "ms!");
+        System.out.println("Downloaded all articles in : " + duration + "ms!");
         return count;
     }
 }
