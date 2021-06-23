@@ -18,6 +18,7 @@ public class ParallelDownloader extends Downloader{
                 allFutures.add(future);
             }
             //wait for every future to finish, then continue
+            System.out.println("Waiting for downloads to finish...");
             for (Future<String> future : allFutures) {
                 String result = future.get();
             }
